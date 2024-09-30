@@ -114,7 +114,8 @@ def canonical_form(a, b, c):
     delta = round_to_precision(b ** 2 - 4 * a * c, precision)
 
     if delta > 0:
-        root1 = round_to_precision((-b + delta ** 0.5) / (2 * a), precision)
+        root1 = round_to_precision(square_root(delta), precision)
+        root1 = round_to_precision((-b + root1) / (2 * a), precision)
         root2 = round_to_precision((-b - delta ** 0.5) / (2 * a), precision)
         factored_form = str(format_number(a)) + "(x - " + format_number(root1) + ")(x - " + format_number(root2) + ")"
         roots = (root1, root2)
