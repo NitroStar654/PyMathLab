@@ -2,18 +2,21 @@ question = ("You are in the Main Menu,\n"
             "what do you want to do?\n"
             "[1] Basic Math\n"
             "[2] Advanced Math\n"
-            "[3] Exit\nYour choice: ")
+            "[3] Exit\n"
+            "Your choice: ")
 
 basic_math_question = ("You are in Basic Math,\n"
                        "what do you want to do?\n"
                        "[1] Factorial\n"
                        "[2] Square Root\n"
-                       "[3] Go back\nYour choice: ")
+                       "[3] Go back\n"
+                       "Your choice: ")
 
 advanced_math_question = ("You are in Advanced Math,\n"
                           "what do you want to do?\n"
                           "[1] Quadratic\n"
-                          "[2] Go back\nYour choice: ")
+                          "[2] Go back\n"
+                          "Your choice: ")
 
 invalide_choice = ("Invalid choice.\n"
                    "Please try again.")
@@ -23,7 +26,7 @@ square_root_question = "Enter a positive number: "
 quadratic_question = "Enter the coefficient 'a': "
 quadratic_question2 = "Enter the coefficient 'b': "
 quadratic_question3 = "Enter the coefficient 'c': "
-precision = 0.0000000001  # You can increase or decrease precision for better results
+precision = 7  # Précision par défaut à 7 chiffres
 
 
 def check_type(n):
@@ -37,6 +40,17 @@ def check_type(n):
 def check_set(n):
     return ("zero" if n == 0 else
             "negative" if n < 0 else "positive")
+
+
+def round_to_precision(value, precision_value):
+    return round(value, precision_value)
+
+
+def format_number(value):
+    # Format les nombres pour supprimer les zéros inutiles
+    if value == int(value):
+        return str(int(value))
+    return str(value)
 
 
 def factorial_start(n):
@@ -72,55 +86,50 @@ def square_root_start(n):
 
 def square_root(n):
     guess = n / 2.0
-    while abs(guess * guess - n) > precision:
+    while abs(guess * guess - n) > 0.000000000001:
         guess = (guess + n / guess) / 2.0
-    return guess
+    return round_to_precision(guess, precision)
 
 
 def canonical_form_start(a, b, c):
     while True:
-        if all(check_type(x) in ["integer", "float"]
-               for x in [a, b, c]):
+        if all(check_type(x) in ["integer", "float"] for x in [a, b, c]):
             a, b, c = float(a), float(b), float(c)
             if a == 0:
-                print("Coefficient 'a' cannot be 0\n"
-                      "in a quadratic equation.")
+                print("Coefficient 'a' cannot be 0\nin a quadratic equation.")
                 a = input(quadratic_question)
                 b = input(quadratic_question2)
                 c = input(quadratic_question3)
                 continue
             return canonical_form(a, b, c)
-        print("Invalid input. Please enter\n"
-              "numeric values for 'a', 'b',\nand 'c'.")
+        print("Invalid input. Please enter\nnumeric values for 'a', 'b',\nand 'c'.")
         a = input(quadratic_question)
         b = input(quadratic_question2)
         c = input(quadratic_question3)
 
 
 def canonical_form(a, b, c):
-    h = -b / (2 * a)
-    k = c - (b ** 2) / (4 * a)
-    delta = b ** 2 - 4 * a * c
+    h = round_to_precision(-b / (2 * a), precision)
+    k = round_to_precision(c - (b ** 2) / (4 * a), precision)
+    delta = round_to_precision(b ** 2 - 4 * a * c, precision)
 
     if delta > 0:
-        root1 = (-b + delta ** 0.5) / (2 * a)
-        root2 = (-b - delta ** 0.5) / (2 * a)
-        factored_form = str(a) + "(" + str(root1) + ")(" + str(root2) + ")"
+        root1 = round_to_precision((-b + delta ** 0.5) / (2 * a), precision)
+        root2 = round_to_precision((-b - delta ** 0.5) / (2 * a), precision)
+        factored_form = str(format_number(a)) + "(x - " + format_number(root1) + ")(x - " + format_number(root2) + ")"
         roots = (root1, root2)
     elif delta == 0:
-        root = -b / (2 * a)
-        factored_form = str(a) + "(" + str(root) + ")^2"
+        root = round_to_precision(-b / (2 * a), precision)
+        factored_form = str(format_number(a)) + "(" + format_number(root) + ")^2"
         roots = (root,)
     else:
-        factored_form = "No real roots (delta < 0)"
-        roots = None
+        factored_form = None
+        roots = "No real roots (delta < 0)"
 
-    return {
-        "canonical_form": str(a) + "(x - " + str(h) + ")^2 + " + str(k),
-        "factored_form": factored_form,
-        "roots": roots,
-        "discriminant": delta
-    }
+    return ("Canonical Form: " + str(format_number(a)) + "(x - " + format_number(h) + ")^2 + " + format_number(k) +
+            "\nDiscriminant: " + str(format_number(delta)) +
+            "\nRoots: " + str(roots) +
+            "\nFactored Form: " + str(factored_form))
 
 
 def main():
@@ -146,10 +155,12 @@ def main():
 
                 if basic_math_answer == 1:
                     number = input(factorial_question)
-                    print("The factorial of " + str(number) + " is:\n" + str(factorial_start(number)))
+                    factorial_result = factorial_start(number)
+                    print("The factorial of " + str(number) + " is:\n" + format_number(factorial_result))
                 elif basic_math_answer == 2:
                     number = input(square_root_question)
-                    print("The square root of " + str(number) + " is:\n" + str(square_root_start(number)))
+                    square_root_result = square_root_start(number)
+                    print("The square root of " + str(number) + " is:\n" + format_number(square_root_result))
                 elif basic_math_answer == 3:
                     break
                 else:
@@ -167,8 +178,8 @@ def main():
                     a = input(quadratic_question)
                     b = input(quadratic_question2)
                     c = input(quadratic_question3)
-                    print("Canonical form is:\n" +
-                          str(canonical_form_start(a, b, c)))
+                    result = canonical_form_start(a, b, c)
+                    print("Result for " + a + "x^2 + " + b + "x + " + c + " is:\n" + str(result))
                 elif advanced_math_answer == 2:
                     break
                 else:
@@ -183,8 +194,8 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    print("See you soon!")
+    print("\nSee you soon!")
 except Exception as e:
     print("An error occurred:", str(e))
-    print("Feel free to open an issue on GitHub: "
+    print("Feel free to open an issue on GitHub:\n"
           "https://github.com/NitroStar654/PyMathLab")
