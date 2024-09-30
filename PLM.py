@@ -126,10 +126,10 @@ def canonical_form(a, b, c):
         factored_form = None
         roots = "No real roots (delta < 0)"
 
-    return ("Canonical Form: " + str(format_number(a)) + "(x - " + format_number(h) + ")^2 + " + format_number(k) +
+    return ("Canonical Form:\n" + str(format_number(a)) + "(x - " + format_number(h) + ")^2 + " + format_number(k) +
             "\nDiscriminant: " + str(format_number(delta)) +
             "\nRoots: " + str(roots) +
-            "\nFactored Form: " + str(factored_form))
+            "\nFactored Form:\n" + str(factored_form))
 
 
 def main():
