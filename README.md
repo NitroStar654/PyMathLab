@@ -31,13 +31,13 @@ cd PyMathLab
 
 ### Running the scripts
 
-The PyMathLab project is contained in a single file called ```PyMathLab.py```, designed for Python-enabled calculators like the TI-83 Python Edition. To run it:
+The PyMathLab project is contained in a single file called ```PLM.py```, designed for Python-enabled calculators like the TI-83 Python Edition. To run it:
 
-1. Transfer the ```PyMathLab.py``` file to your calculator using software such as TI Connect CE.
+1. Transfer the ```PLM.py``` file to your calculator using software such as TI Connect CE.
 
 2. Once the file is transferred, open the Python interpreter on your calculator.
 
-3. Run the script by typing ```from PyMathLab import *```  or ```run('PyMathLab.py')```, depending on your calculator's interface.
+3. Run the script by typing ```from PLM import *```  or ```run('PLM.py')```, depending on your calculator's interface.
 
 ### Using the tools
 
