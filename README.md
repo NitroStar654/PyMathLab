@@ -44,12 +44,12 @@ The PyMathLab project is contained in a single file called ```PLM.py```, designe
 The script offers several mathematical tools accessible through a menu. Here's an overview of the available features:
 
 - Main Menu:
-  - [1] Basic Math
-    - Factorial
-    - Square Root
-  - [2] Advanced Math
-    - Solve Quadratic Equations (Canonical form)
-  - [3] Exit
+    - [1] Basic Math
+        - Factorial
+        - Square Root
+    - [2] Advanced Math
+        - Solve Quadratic Equations (Canonical form)
+    - [3] Exit
 
 #### Example of Usage
 
